@@ -9,15 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import es.salesianos.model.Actor;
-import es.salesianos.service.Service;
-import es.salesianos.service.Service;
+import es.salesianos.service.ActorService;
 
 public class ActorServlet extends HttpServlet {
 
-
 	private static final long serialVersionUID = 1L;
 
-	private Service service = new Service();
+	private ActorService service = new ActorService();
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -30,6 +28,8 @@ public class ActorServlet extends HttpServlet {
 	}
 
 	private void doAction(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		Actor actor = service.assembleActorFromRequest(req);
+		service.insert(actor);
 		redirect(req, resp);
 	}
 

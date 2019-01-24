@@ -9,25 +9,26 @@ import java.util.List;
 
 import es.salesianos.connection.AbstractConnection;
 import es.salesianos.connection.H2Connection;
-import es.salesianos.model.Director;
+import es.salesianos.model.Film;
 
-public class DirectorRepository {
+public class FilmRepository {
 
 	private static final String jdbcUrl = "jdbc:h2:file:./src/main/resources/test";
 	AbstractConnection manager = new H2Connection();
 
-	public List<Director> selectAllDirector() {
+	public List<Film> selectAllFilm() {
 		Connection conn = manager.open(jdbcUrl);
 		PreparedStatement preparedStatement = null;
-		List<Director> list = new ArrayList<Director>();
+		List<Film> list = new ArrayList<Film>();
 		try {
-			preparedStatement = conn.prepareStatement("SELECT * FROM DIRECTOR");
+			preparedStatement = conn.prepareStatement("SELECT * FROM FILM");
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
-				Director director = new Director();
-				director.setCod(resultSet.getInt(1));
-				director.setName(resultSet.getString(2));
-				list.add(director);
+				Film film = new Film();
+				film.setCod(resultSet.getInt(0));
+				film.setTitle(resultSet.getString(1));
+				film.setCodDirector(resultSet.getInt(2));
+				list.add(film);
 			}
 
 		} catch (SQLException e) {
@@ -40,12 +41,14 @@ public class DirectorRepository {
 		return list;
 	}
 
-	public void insert(Director director) {
+	public void insert(Film film) {
 		Connection conn = manager.open(jdbcUrl);
 		PreparedStatement preparedStatement = null;
 		try {
-			preparedStatement = conn.prepareStatement("INSERT INTO DIRECTOR (name)" + "VALUES (?)");
-			preparedStatement.setString(1, director.getName());
+			preparedStatement = conn.prepareStatement("INSERT INTO FILM	 (cod, tittle, codOwner)" + "VALUES (?, ?, ?)");
+			preparedStatement.setInt(1, film.getCod());
+			preparedStatement.setString(2, film.getTitle());
+			preparedStatement.setInt(3, film.getCodDirector());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -56,12 +59,12 @@ public class DirectorRepository {
 		}
 	}
 
-	public void delete(Director director) {
+	public void delete(Film film) {
 		Connection conn = manager.open(jdbcUrl);
 		PreparedStatement preparedStatement = null;
 		try {
-			preparedStatement = conn.prepareStatement("DELETE FROM DIRECTOR WHERE cod=?");
-			preparedStatement.setInt(1, director.getCod());
+			preparedStatement = conn.prepareStatement("DELETE FROM PELICULA WHERE cod=?");
+			preparedStatement.setInt(1, film.getCod());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -6,7 +6,8 @@ public class Actor extends Director{
 	private Integer year;
 
 	public Integer getYear() {
-		return year;
+		return year ;
+		//return year;
 	}
 
 	public void setYear(Integer year) {

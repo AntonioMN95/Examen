@@ -11,7 +11,7 @@ import es.salesianos.connection.AbstractConnection;
 import es.salesianos.connection.H2Connection;
 import es.salesianos.model.Actor;
 import es.salesianos.model.Director;
-import es.salesianos.model.Pelicula;
+import es.salesianos.model.Film;
 
 public class Repository {
 
@@ -40,15 +40,15 @@ public class Repository {
 	}
 	
 	
-	public void insert(Pelicula pelicula) {
+	public void insert(Film film) {
 		Connection conn = manager.open(jdbcUrl);
 		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = conn
 					.prepareStatement("INSERT INTO Pelicula (cod, title, codOwner)" + "VALUES (?, ?, ?)");
-			preparedStatement.setInt(1, pelicula.getCod());
-			preparedStatement.setString(2, pelicula.getTitle());
-			preparedStatement.setInt(3, pelicula.getCodDirector());
+			preparedStatement.setInt(1, film.getCod());
+			preparedStatement.setString(2, film.getTitle());
+			preparedStatement.setInt(3, film.getCodDirector());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -64,8 +64,7 @@ public class Repository {
 		Connection conn = manager.open(jdbcUrl);
 		PreparedStatement preparedStatement = null;
 		try {
-			preparedStatement = conn
-					.prepareStatement("INSERT INTO DIRECTOR (cod, name)" + "VALUES (?, ?)");
+			preparedStatement = conn.prepareStatement("INSERT INTO DIRECTOR (cod, name)" + "VALUES (?, ?)");
 			preparedStatement.setInt(1, director.getCod());
 			preparedStatement.setString(2, director.getNombre());
 			preparedStatement.executeUpdate();
@@ -97,12 +96,11 @@ public class Repository {
 
 	}
 	
-	public void delete(Pelicula actor) {
+	public void delete(Film actor) {
 		Connection conn = manager.open(jdbcUrl);
 		PreparedStatement preparedStatement = null;
 		try {
-			preparedStatement = conn
-					.prepareStatement("DELETE FROM PELICULA WHERE cod=?");
+			preparedStatement = conn.prepareStatement("DELETE FROM PELICULA WHERE cod=?");
 			preparedStatement.setInt(1, actor.getCod());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
@@ -119,8 +117,7 @@ public class Repository {
 		Connection conn = manager.open(jdbcUrl);
 		PreparedStatement preparedStatement = null;
 		try {
-			preparedStatement = conn
-					.prepareStatement("DELETE FROM DIRECTOR WHERE cod=?");
+			preparedStatement = conn.prepareStatement("DELETE FROM DIRECTOR WHERE cod=?");
 			preparedStatement.setInt(1, actor.getCod());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
@@ -139,8 +136,7 @@ public class Repository {
 		PreparedStatement preparedStatement = null;
 		List<Actor> list = new ArrayList<Actor>();
 		try {
-			preparedStatement = conn
-					.prepareStatement("SELECT * FROM ACTOR");
+			preparedStatement = conn.prepareStatement("SELECT * FROM ACTOR");
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				Actor actor = new Actor();
@@ -165,8 +161,7 @@ public class Repository {
 		PreparedStatement preparedStatement = null;
 		List<Director> list = new ArrayList<Director>();
 		try {
-			preparedStatement = conn
-					.prepareStatement("SELECT * FROM DIRECTOR");
+			preparedStatement = conn.prepareStatement("SELECT * FROM DIRECTOR");
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				Director director = new Director();
@@ -185,16 +180,15 @@ public class Repository {
 		return list;
 	}
 	
-	public List<Pelicula> selectAllPelicula() {
+	public List<Film> selectAllFilm() {
 		Connection conn = manager.open(jdbcUrl);
 		PreparedStatement preparedStatement = null;
-		List<Pelicula> list = new ArrayList<Pelicula>();
+		List<Film> list = new ArrayList<Film>();
 		try {
-			preparedStatement = conn
-					.prepareStatement("SELECT * FROM PELICULA");
+			preparedStatement = conn.prepareStatement("SELECT * FROM PELICULA");
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
-				Pelicula director = new Pelicula();
+				Film director = new Film();
 				director.setCod(resultSet.getInt(0));
 				director.setTitle(resultSet.getString(1));
 				director.setCodDirector(resultSet.getInt(2));

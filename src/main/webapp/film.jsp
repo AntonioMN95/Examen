@@ -8,35 +8,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Index page</title>
 </head>
+
 <body>
 
 <% List<Film> listAllFilm = (List<Film>)request.getAttribute("listAllFilm"); %>
 
 	<form action="/film" method="post">
-		<span>cod:</span> <input type="text" name="cod"> <br />
-		<span>title:</span> <input type="text" name="title"> <br />
-		<span>codDirector:</span> <input type="text" name="codDirector"> <br />
+	<span>Title:</span> <input type="text" name="title"> <br/>
+		<span>Director:</span> <input type="text" name="codDirector"> <br/>
 		<input type="submit">
 	</form>
-	<table border="1">
-		<thead>
-			<tr>
-				<td>Cod</td>
-				<td>Title</td>
-				<td>codDirector</td>
-				<td>Editar</td>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="film" items="${listAllFilm}">
-				<tr>
-					<td><c:out value="${film.cod}"/> </td>
-					<td><c:out value="${film.title}"/> </td>
-					<td><c:out value="${film.codOwner}"/> </td>
-					<td><a href="/film?cod=${film.cod}">EDIT</a> </td>
-		    	</tr>
-			</c:forEach>
-		</tbody>
-	</table>
+	
 </body>
 </html>

@@ -25,9 +25,9 @@ public class ActorRepository {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				Actor actor = new Actor();
-				actor.setCod(resultSet.getInt(0));
-				actor.setName(resultSet.getNString(0));
-				actor.setYearOfBirthDate(resultSet.getInt(2));
+				actor.setCod(resultSet.getInt(1));
+				actor.setName(resultSet.getNString(2));
+				actor.setBirthYear(resultSet.getInt(3));
 				list.add(actor);
 			}
 
@@ -49,7 +49,7 @@ public class ActorRepository {
 					.prepareStatement("INSERT INTO ACTOR (cod,name,yearOfBirthDate)" + "VALUES (?, ?, ?)");
 			preparedStatement.setInt(1, actor.getCod());
 			preparedStatement.setString(2, actor.getName());
-			preparedStatement.setInt(2, actor.getYearOfBirthDate());
+			preparedStatement.setInt(2, actor.getBirthYear());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -61,12 +61,12 @@ public class ActorRepository {
 
 	}
 
-	public void delete(Actor actor) {
+	public void delete(int code) {
 		Connection conn = manager.open(jdbcUrl);
 		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = conn.prepareStatement("DELETE FROM ACTOR WHERE cod=?");
-			preparedStatement.setInt(1, actor.getCod());
+			preparedStatement.setInt(1, code);
 			preparedStatement.executeUpdate();
 
 		} catch (SQLException e) {
@@ -77,6 +77,28 @@ public class ActorRepository {
 			manager.close(conn);
 		}
 
+	}
+
+	public Actor findByCod(int code) {
+		Connection conn = manager.open(jdbcUrl);
+		PreparedStatement preparedStatement = null;
+		Actor actor = new Actor();
+		try {
+			preparedStatement = conn.prepareStatement("SELECT cod, name, yearOfBirthDate FROM ACTOR WHERE cod=?");
+			preparedStatement.setInt(1, code);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			actor.setCod(resultSet.getInt(1));
+			actor.setName(resultSet.getNString(2));
+			actor.setBirthYear(resultSet.getInt(3));
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} finally {
+			manager.close(preparedStatement);
+			manager.close(conn);
+		}
+		return actor;
 	}
 
 }

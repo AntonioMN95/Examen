@@ -1,6 +1,7 @@
 package es.salesianos.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,17 +20,24 @@ public class DirectorServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doAction(req, resp);
+
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/director.jsp");
+		dispatcher.forward(req, resp);
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String code = req.getParameter("cod");
+		if (code != null) {
+			service.delete(Integer.parseInt(code));
+		}
 		doAction(req, resp);
 	}
 
 	private void doAction(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		Director director = service.assembleDirectorFromRequest(req);
-		service.insert(director);
+		List<Director> listAllDirector = service.listAllDirector();
+		req.setAttribute("listAllDirector", listAllDirector);
+		redirect(req, resp);
 	}
 
 	protected void redirect(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {

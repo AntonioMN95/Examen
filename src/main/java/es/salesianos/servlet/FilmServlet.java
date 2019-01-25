@@ -10,25 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import es.salesianos.model.Film;
-import es.salesianos.service.Service;
+import es.salesianos.service.FilmService;
 
 public class FilmServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	private Service service = new Service();
+	private FilmService service = new FilmService();
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String codString = req.getParameter("cod");
-		String title = req.getParameter("title");
-		String codDirectorString = req.getParameter("codDirector");
-		Film film = new Film();
-		int cod = Integer.parseInt(codString);
-		film.setCod(cod);
-		int codDirector = Integer.parseInt(codDirectorString);
-		film.setCodDirector(codDirector);
-		film.setTitle(title);
+		Film film = service.assembleFilmFromRequest(req);
 		service.insert(film);
 		doAction(req, resp);
 	}
@@ -38,10 +30,7 @@ public class FilmServlet extends HttpServlet {
 		String codString = req.getParameter("cod");
 
 		if (null != codString) {
-			Film film = new Film();
-			int cod = Integer.parseInt(codString);
-			film.setCod(cod);
-			service.delete(film);
+			service.delete(Integer.parseInt(codString));
 		}
 		doAction(req, resp);
 	}

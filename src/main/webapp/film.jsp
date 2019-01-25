@@ -6,18 +6,43 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Index page</title>
+<title>Films</title>
 </head>
 
 <body>
 
-<% List<Film> listAllFilm = (List<Film>)request.getAttribute("listAllFilm"); %>
+	<% 
+	List<Film> listAllFilm = (List<Film>)request.getAttribute("listAllFilm"); 
+	%>
 
 	<form action="/film" method="post">
 	<span>Title:</span> <input type="text" name="title"> <br/>
 		<span>Director:</span> <input type="text" name="codDirector"> <br/>
 		<input type="submit">
 	</form>
+	<br/>
+	<table border="1">
+		<thead>
+			<tr>
+				<td>Code</td>
+				<td>Name</td>
+				<td>Director</td>
+				<td>Options</td>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="film" items="${listAllFilm}">
+				<tr>
+					<td><c:out value="${film.cod}" /></td>
+					<td><c:out value="${film.title}" /></td>
+					<td><c:out value="${film.codDirector}" /></td>
+					<td><a href="/film?cod=${film.cod}">Delete</a></td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+	<br/>
+	<a href="/index.jsp">Back to Index</a><br/>
 	
 </body>
 </html>

@@ -1,22 +1,24 @@
-package es.salesianos.servlet;
+package es.salesianos.controller;
 
 import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import es.salesianos.model.Actor;
 import es.salesianos.service.ActorService;
 
-public class ActorServlet extends HttpServlet {
+@Controller
+public class ActorController {
 
-	private static final long serialVersionUID = 1L;
-
-	private ActorService service = new ActorService();
+	@Autowired
+	private ActorService service;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

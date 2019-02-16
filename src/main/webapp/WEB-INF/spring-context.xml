@@ -15,13 +15,4 @@
 	<context:component-scan
 		base-package="es.salesianos.*" />
 	<context:annotation-config />
-
-
-
-
-
-
-
-
-
 </beans> 

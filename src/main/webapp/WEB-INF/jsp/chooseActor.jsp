@@ -9,10 +9,7 @@
 <title>Choose an actor</title>
 </head>
 <body>
-	<%
-		List<Actor> listAllActor = (List<Actor>) request.getAttribute("listAllActor");
-		request.getAttribute("filmCod");
-	%>
+	
 	<table border="1">
 		<thead>
 			<tr>
@@ -28,7 +25,7 @@
 					<td><c:out value="${actor.cod}" /></td>
 					<td><c:out value="${actor.name}" /></td>
 					<td><c:out value="${actor.birthYear}" /></td>
-					<td><a href="/fillFilmActor?actorCod=${actor.cod}&filmCod=${filmCod}">Select</a></td>
+							<td><a href="/recoveryFilmActor?actorCod=${actor.cod}&filmCod=${filmCod}">Select</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>

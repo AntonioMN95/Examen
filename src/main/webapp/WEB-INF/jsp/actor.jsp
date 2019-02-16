@@ -12,15 +12,15 @@
 	%
 		List<Actor> listAllActor = (List<Actor>) request.getAttribute("listAllActor");
 	%>
-	<form action="/actor" method="post">
+	<form action="/insertActor" method="post">
 		<span>Name:</span> <input type="text" name="name"> <br/>
-		<span>Birth year:</span> <input type="text" name="year"> <br/>
+	<span>Birth year:</span> <input type="text" name="birthYear"><br/> 
 		<input type="submit">
 	</form>
 	<br/>
 
 	<h3>Filter by birth year</h3>
-	<form action="/actor" method="get">
+<form action="/filterActors" method="get">
 		<span>From year:</span>
 		<input type="text" name="startYear">
 		<span>To:</span>
@@ -38,17 +38,17 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="actor" items="${listAllActor}">
+			<c:forEach var="actor" items="${listAllActors}">
 				<tr>
 					<td><c:out value="${actor.cod}" /></td>
 					<td><c:out value="${actor.name}" /></td>
 					<td><c:out value="${actor.birthYear}" /></td>
-					<td><a href="/actor?cod=${actor.cod}">Delete</a></td>
+					<td><a href="/deleteActor?cod=${actor.cod}">Delete</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
 	<br/>
-	<a href="/index.jsp">Back to Index</a><br/>
+	<a href="/index">Back to Index</a><br/>
 </body>
 </html>

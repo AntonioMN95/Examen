@@ -9,11 +9,9 @@
 <title>Directors</title>
 </head>
 <body>
-	<%
-		List<Director> listAllDirector = (List<Director>) request.getAttribute("listAllDirector");
-	%>
 	
-	<form action="/director" method="post">
+	
+	<form action="/insertDirector" method="post">
 	<span>Name:</span> <input type="text" name="name"> <br/>
 		<input type="submit">
 	</form>
@@ -28,16 +26,16 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="director" items="${listAllDirector}">
+			<c:forEach var="director" items="${listAllDirectors}">
 				<tr>
 					<td><c:out value="${director.cod}" /></td>
 					<td><c:out value="${director.name}" /></td>
-					<td><a href="/director?cod=${director.cod}">Delete</a></td>
+					<td><a href="/deleteDirector?cod=${director.cod}">Delete</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
 	<br/>
-	<a href="/index.jsp">Back to Index</a><br/>
+	<a href="/index">Back to Index</a><br/>
 </body>
 </html>
